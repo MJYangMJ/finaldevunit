@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.yangmj.bean">
+
+    <class name="BlogBean" table="tb_blog">
+
+        <id name="blogID" type="int" column="BLOG_ID">
+            <generator class="native"/><!-- id自动增长策略 -->
+        </id>
+
+        <property name="blogTitle" column="title"/><!-- name一般都是类中的属性名 -->
+        <property name="blogDate" column="date_upload"/><!-- name一般都是类中的属性名 -->
+        <property name="blogClickTimes" column="views_count"/><!-- name一般都是类中的属性名 -->
+        <property name="blogContent" column="content"/><!-- name一般都是类中的属性名 -->
+
+        <many-to-one name="userBean" column="USER_ID" class="com.yangmj.bean.UserBean" cascade="save-update,delete"  unique="true"/>
+
+    </class>
+
+</hibernate-mapping>

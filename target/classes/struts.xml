@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+    <constant name="struts.enable.DynamicMethodInvocation" value="true"/>
+    <constant name="struts.objectFactory" value="spring"/>
+
+    <!-- 默认访问页面 -->
+    <package name="default" extends="struts-default" namespace="/">
+        <default-action-ref name="default"/>
+        <action name="default">
+            <result>/login.jsp</result>
+        </action>
+    </package>
+
+
+
+    <package name="indexLoad" namespace="/" extends="struts-default">
+        <result-types>
+            <result-type name="json" class="org.apache.struts2.json.JSONResult"/>
+        </result-types>
+        <interceptors>
+            <interceptor name="json" class="org.apache.struts2.json.JSONInterceptor"/>
+        </interceptors>
+        <!--<action name="test" class="com.yangmj.test.Test_2" method="execute">-->
+            <!--<result name="SUCCESS">/index.jsp</result>-->
+            <!--&lt;!&ndash;<result name="error">/error.jsp</result>&ndash;&gt;-->
+        <!--</action>-->
+        <!--<action name="anothertest" class="com.yangmj.test.Test_2" method="getAction">-->
+            <!--<result name="success">/index.jsp</result>-->
+            <!--&lt;!&ndash;<result name="error">/error.jsp</result>&ndash;&gt;-->
+        <!--</action>-->
+        <!--<action name="othertest" class="com.yangmj.test.Test_2" method="getFileDetectionLists">-->
+            <!--<result name="success" type="json">-->
+                <!--<param name="root">results</param>-->
+            <!--</result>-->
+        <!--</action>-->
+        <!--<action name="oothertest" class="com.yangmj.service.impl.UserServiceImpl" method="getFileDetectionLists">-->
+            <!--<result name="success" type="json">-->
+                <!--<param name="root">results</param>-->
+            <!--</result>-->
+        <!--</action>-->
+        <!--<action name="ooothertest" class="com.yangmj.service.impl.UserServiceImpl" method="getAnotherLists">-->
+            <!--<result name="success" type="json">-->
+                <!--<param name="root">results</param>-->
+            <!--</result>-->
+        <!--</action>-->
+        <!--<action name="oooothertest" class="com.yangmj.service.impl.UserServiceImpl" method="getFileDectionLists">-->
+            <!--<result name="success" type="json">-->
+                <!--<param name="root">results</param>-->
+            <!--</result>-->
+        <!--</action>-->
+    </package>
+
+    <package name="userAction" namespace="/user" extends="struts-default">
+        <action name="LoginAction" class="UserStuffsAction" method="login">
+            <result name="success">/index.jsp</result>
+            <result name="error">/login.jsp</result>
+        </action>
+        <action name="LogoutAction" class="UserStuffsAction" method="logout">
+            <result name="success">/index.jsp</result>
+        </action>
+        <action name="RegisterAction" class="UserStuffsAction" method="register">
+            <result name="success">/login.jsp</result>
+            <result name="error">/register.jsp</result>
+        </action>
+        <action name="ShowAllUsersAction" class="UserStuffsAction" method="showAllUsers">
+            <result name="success">/all_current_users.jsp</result>
+            <result name="error">/error.jsp</result>
+        </action>
+        <action name="UpdateInfoAction" class="UserStuffsAction" method="update">
+            <result name="success">/index.jsp</result>
+            <result name="error">/error.jsp</result>
+        </action>
+        <action name="GetUserInfoByName" class="UserStuffsAction" method="getUserBeanByUsername">
+            <result name="success">/modify_info.jsp</result>
+            <result name="error">/modify_info.jsp</result>
+        </action>
+        <action name="testSave" class="testSave" method="testSave">
+            <result name="success">/index.jsp</result>
+        </action>
+    </package>
+
+    <package name="blogAction" namespace="/blog" extends="struts-default">
+        <action name="SearchBlogAction" class="BlogStuffsAction" method="">
+            <result name="success">/</result>
+            <result name="error">/</result>
+        </action>
+    </package>
+
+    <package name="searchActions" namespace="/search" extends="struts-default">
+        <action name="SearchVirusAction" class="SearchVirusAction" method="searchAction">
+            <result name="NOMATCHED">/noresult.jsp</result>
+            <result name="MATCHED">/searchresult.jsp</result>
+        </action>
+    </package>
+
+    <package name="test" namespace="/test" extends="struts-default">
+        <action name="TestAction" class="com.yangmj.action.SearchVirusAction" method="TestAction">
+            <result name="success">/searchresult.jsp</result>
+        </action>
+    </package>
+</struts>

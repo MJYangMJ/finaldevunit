@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.yangmj.bean">
+
+    <class name="IPBean" table="tb_ip">
+
+        <id name="IPID" type="int" column="IP_ID">
+            <generator class="native"/><!-- id自动增长策略 -->
+        </id>
+
+        <property name="IPAddress" column="ip_address"/><!-- name一般都是类中的属性名 -->
+        <property name="IPAutonomousSystem" column="autonomous_system"/><!-- name一般都是类中的属性名 -->
+        <property name="IPCountry" column="country"/><!-- name一般都是类中的属性名 -->
+        <property name="IPNotes" column="notes"/><!-- name一般都是类中的属性名 -->
+        <set name="ipdnsBeanSet" table="tb_ip_dns" lazy="true">
+            <key column="IP_ID"></key>
+            <one-to-many class="com.yangmj.bean.IPDNSBean"/>
+        </set>
+        <set name="ipurlBeanSet" table="tb_ip_url" lazy="true">
+            <key column="IP_ID"></key>
+            <one-to-many class="com.yangmj.bean.IPURLBean"/>
+        </set>
+
+    </class>
+
+</hibernate-mapping>

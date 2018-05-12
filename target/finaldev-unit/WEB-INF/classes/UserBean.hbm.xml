@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.yangmj.bean">
+
+    <class name="UserBean" table="tb_user">
+
+        <id name="userID" type="int" column="USER_ID">
+            <generator class="native"/><!-- id自动增长策略 -->
+        </id>
+
+        <property name="userName" column="name"/><!-- name一般都是类中的属性名 -->
+        <property name="userPwd" column="password"/><!-- name一般都是类中的属性名 -->
+
+        <many-to-one name="levelBean" column="LEVEL_ID" class="com.yangmj.bean.LevelBean" lazy="false" cascade="save-update,delete"/>
+
+        <!--<set name="blogBeanList" table="tb_blog" lazy="false" >-->
+        <!--<key column="BLOG_ID"></key>-->
+        <!--<one-to-many class="com.yangmj.bean.BlogBean"/>-->
+        <!--</set>-->
+    </class>
+
+</hibernate-mapping>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--开启注解-->
+    <context:annotation-config></context:annotation-config>
+    <!--注解扫描包-->
+    <context:component-scan base-package="com.yangmj.service.impl"></context:component-scan>
+
+    <!-- 引入属性文件 -->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+
+    <!-- 配置C3P0连接池 -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <!-- 数据库连接相关信息 -->
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="driverClass" value="${jdbc.driverClass}"/>
+        <property name="user" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+
+    <!-- 配置Hibernate的SessionFactory -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <!-- 注入连接池 -->
+        <property name="dataSource" ref="dataSource"/>
+        <!-- 配置Hibernate属性 -->
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+                <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+                <prop key="hibernate.current_session_context_class">${hibernate.current_session_context_class}</prop>
+                <!--<prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate5.SpringSessionContext</prop>-->
+                <!-- 使用getCurrentSession()方法，必须配置此属性 -->
+                <!--<prop key="hibernate.hbm2ddl.auto">update</prop>--><!--hibernate update tables automatically-->
+            </props>
+        </property>
+        <!-- 扫描并加载注解过的实体类 -->
+        <!--<property name="packagesToScan" value="com.yangmj.bean"/>-->
+        <!--<property name="mappingDirectoryLocations">-->
+            <!--<list>-->
+                <!--<value>classpath:com/yangmj/bean/BlogBean.hbm.xml</value>-->
+            <!--</list>-->
+        <!--</property>-->
+        <property name="mappingDirectoryLocations">
+            <list>
+                <value>classpath:</value>
+            </list>
+        </property>
+
+
+    </bean>
+
+     <!--配置事务管理器-->
+    <!--<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">-->
+        <!--&lt;!&ndash; 注入SessionFactory &ndash;&gt;-->
+        <!--<property name="sessionFactory" ref="sessionFactory"/>-->
+    <!--</bean>-->
+
+
+
+    <!--<tx:annotation-driven proxy-target-class="true" transaction-manager="transactionManager" />-->
+
+    <!-- 配置事务增强 -->
+    <!--<tx:advice id="txAdvice" transaction-manager="transactionManager">-->
+        <!--<tx:attributes>-->
+            <!--&lt;!&ndash; 配置需要进行事务管理的方法，和事务传播行为 &ndash;&gt;-->
+            <!--<tx:method name="*save*" propagation="REQUIRED"/>-->
+            <!--<tx:method name="*update*" propagation="REQUIRED"/>-->
+            <!--<tx:method name="*delete*" propagation="REQUIRED"/>-->
+        <!--</tx:attributes>-->
+    <!--</tx:advice>-->
+
+    <!-- 配置切面 -->
+    <!--<aop:config>-->
+        <!--&lt;!&ndash; 配置切入点-->
+            <!--* org.ssh.service.*+.*(..)-->
+                <!--*：表示方法的作用域，*表示所有-->
+                <!--org.ssh.service.*：表示org.ssh.service下的任何包-->
+                <!--org.ssh.service.*+：表示org.ssh.service下的任何包及其子包-->
+                <!--*(..)：*表示任何方法，(..)表示方法的任何参数-->
+         <!--&ndash;&gt;-->
+        <!--<aop:pointcut id="pointcut" expression="execution(* com.yangmj.service.*+.*(..))"/>-->
+        <!--&lt;!&ndash; 适配切入点和事务增强 &ndash;&gt;-->
+        <!--<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>-->
+    <!--</aop:config>-->
+
+    <bean id="blogDao" class="com.yangmj.dao.impl.BlogDAOImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="blogService" class="com.yangmj.service.impl.BlogServiceImpl">
+        <property name="blogDao" ref="blogDao"/>
+    </bean>
+    <bean id="BlogStuffsAction" class="com.yangmj.action.BlogStuffsAction">
+        <property name="blogService" ref="blogService"/>
+    </bean>
+
+    <bean id="userDAO" class="com.yangmj.dao.impl.UserDAOImpl">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    <bean id="userService" class="com.yangmj.service.impl.UserServiceImpl">
+        <property name="userDAO" ref="userDAO"></property>
+    </bean>
+    <bean id="UserStuffsAction" class="com.yangmj.action.UserStuffsAction" scope="prototype">
+        <property name="userService" ref="userService"></property>
+    </bean>
+
+    <bean id="testSave" class="com.yangmj.action.UserStuffsAction" scope="prototype">
+        <property name="userService" ref="userService"></property>
+    </bean>
+
+    <bean id="searchDAO" class="com.yangmj.dao.impl.SearchDAOImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="searchService" class="com.yangmj.service.impl.SearchServiceImpl">
+        <property name="searchDAO" ref="searchDAO"/>
+    </bean>
+    <bean id="SearchVirusAction" class="com.yangmj.action.SearchVirusAction" scope="prototype">
+        <property name="searchService" ref="searchService"/>
+    </bean>
+
+</beans>

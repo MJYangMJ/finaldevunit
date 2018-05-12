@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.yangmj.bean">
+
+    <class name="FileBean" table="tb_file">
+
+        <id name="fileID" type="int" column="FILE_ID">
+            <generator class="native"/><!-- id自动增长策略 -->
+        </id>
+
+        <property name="file" column="file"/><!-- name一般都是类中的属性名 -->
+        <property name="fileName" column="file_name"/><!-- name一般都是类中的属性名 -->
+        <property name="fileSize" column="file_size"/><!-- name一般都是类中的属性名 -->
+        <property name="fileLastAnalysis" column="last_analysis"/><!-- name一般都是类中的属性名 -->
+
+    </class>
+
+</hibernate-mapping>

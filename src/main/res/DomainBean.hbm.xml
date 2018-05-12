@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.yangmj.bean">
+
+    <class name="DomainBean" table="tb_domain">
+
+        <id name="domainID" type="int" column="DOMAIN_ID">
+            <generator class="native"/><!-- id自动增长策略 -->
+        </id>
+
+        <property name="domainDetial" column="domain"/><!-- name一般都是类中的属性名 -->
+        <property name="domainFeature_1" column="webengine_1"/><!-- name一般都是类中的属性名 -->
+        <property name="domainFeature_2" column="webengine_2"/><!-- name一般都是类中的属性名 -->
+        <property name="domainFeature_3" column="webengine_3"/><!-- name一般都是类中的属性名 -->
+        <property name="domainFeature_4" column="webengine_4"/><!-- name一般都是类中的属性名 -->
+        <set name="domainDNSBeanSet" table="tb_domain_dns" lazy="false">
+            <key column="DOMAIN_ID"></key>
+            <one-to-many class="com.yangmj.bean.DomainDNSBean"/>
+        </set>
+
+    </class>
+
+</hibernate-mapping>

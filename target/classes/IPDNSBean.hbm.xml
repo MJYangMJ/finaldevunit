@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.yangmj.bean">
+
+    <class name="IPDNSBean" table="tb_ip_dns">
+
+        <id name="IPDNSReplicationID" column="DNS_Replication_ID">
+            <generator class="native"/><!-- id自动增长策略 -->
+        </id>
+
+        <property name="IPDNSDateResolved" column="date_resolved"/><!-- name一般都是类中的属性名 -->
+        <property name="IPDNSWebDomain" column="web_domain"/><!-- name一般都是类中的属性名 -->
+
+        <many-to-one name="ipBean" column="IP_ID" class="com.yangmj.bean.IPBean"/>
+    </class>
+
+</hibernate-mapping>
