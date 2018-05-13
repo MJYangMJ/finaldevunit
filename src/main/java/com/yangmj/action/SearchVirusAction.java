@@ -90,23 +90,27 @@ public class SearchVirusAction extends ActionSupport{
 
     public String searchAction() {
         String pythonFileExecResult = runPythonFile(searchMode, searchDetail);
-
-        if (!pythonFileExecResult.equals("0"))
-            return "NOMATCHED";
-        else
-            switch (searchMode) {
-                case 0:
-                    ipResultType = searchService.searchIPAddress(searchDetail);
-                    return "MATCHED";
-                case 1:
-                    domainResultType = searchService.searchDomain(searchDetail);
-                    return "MATCHED";
-                case 2:
-                    fileResultType = searchService.searchFile(searchDetail);
-                    return "MATCHED";
-                default:return "NOMATCHED";
+        try {
+            if (!pythonFileExecResult.equals("0"))
+                return "NOMATCHED";
+            else {
+                switch (searchMode) {
+                    case 0:
+                        ipResultType = searchService.searchIPAddress(searchDetail);
+                        return "MATCHED";
+                    case 1:
+                        domainResultType = searchService.searchDomain(searchDetail);
+                        return "MATCHED";
+                    case 2:
+                        fileResultType = searchService.searchFile(searchDetail);
+                        return "MATCHED";
+                    default:
+                        return "NOMATCHED";
+                }
             }
-
+        } catch (Exception e){
+            return "NOMATCHED";
+        }
     }
 
 

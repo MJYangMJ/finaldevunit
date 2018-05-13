@@ -79,7 +79,7 @@
                 </div>
                 <div class="input-group input-group-md">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-cloud" aria-hidden="true"></i></span>
-                    <input type="text" class="form-control" placeholder="keywords"/>
+                    <input type="text" class="form-control" placeholder="keywords" name="searchDetail"/>
                 </div>
                 <div class="input-group input-group-md">
                     <button type="submit" class="btn btn-default" aria-label="Left Align">

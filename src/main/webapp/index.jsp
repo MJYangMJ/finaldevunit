@@ -21,8 +21,6 @@
                 success:function (data) {
                     var d = eval("("+data+")");
                     a(d);
-
-
                 },
                 error:function () {
                     alert("Something Wrong With The Connection!!");
@@ -68,7 +66,6 @@
                 "</div></div></div>"
             return div_1+div_2;
         }
-
         $(document).ready(function () {
             var str = "current_user";
             var current_user = "<%=session.getAttribute("current_user")%>";
@@ -92,9 +89,6 @@
             $("#time_set").remove();
             $("hr:last").after("<p id='time_set' class='pull-right' style='margin-bottom: 100px;margin-top: 30px;'>Current Time:"+today+"</p>");
         },1000);
-        function alertNoneFunction() {
-            alert("This is not finished yet,be patient and wait!");
-        }
         function showAllUsers() {
             var user = "<%=session.getAttribute("current_user")%>";
             if (user!="yang"){
@@ -176,7 +170,7 @@
                 <li><a href="/searchpage.jsp">search</a></li>
                 <li><a href="#" data-toggle="modal" data-target="#mymodal">contact</a></li>
             </ul>
-            <form action="search/SearchVirusAction" class="navbar-form navbar-right" role="search">
+            <form action="search/SearchVirusAction" method="post" class="navbar-form navbar-right" role="form">
                 <div class="input-group input-group-md">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
                     <select class="form-control" name="searchMode">
@@ -187,7 +181,7 @@
                 </div>
                 <div class="input-group input-group-md">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-cloud" aria-hidden="true"></i></span>
-                    <input type="text" class="form-control" placeholder="keywords"/>
+                    <input type="text" class="form-control" placeholder="keywords" name="searchDetail"/>
                 </div>
                 <div class="input-group input-group-md">
                     <button type="submit" class="btn btn-default" aria-label="Left Align">
