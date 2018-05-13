@@ -13,59 +13,60 @@
     <script src="/Bootstrap/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/Bootstrap/css/bootstrap.min.css">
     <script type="text/javascript">
-//        $(document).ready(function () {
-//            $.ajax({
-//                type:"GET",
-//                url:"ooothertest",
-//                dataType:"json",
-//                success:function (data) {
-//                    var d = eval("("+data+")");
-//                    console.log(d)
-////                    alert(d);
-//                },
-//                error:function () {
-//                    alert("Something Wrong!!");
-//                }
-//
-//            })
-//        })
-//        $(document).ready(function () {
-//            $.ajax({
-//                type:"GET",
-//                url:"oothertest",
-//                dataType:"json",
-//                success:function (data) {
-//                    var d = eval("("+data+")");
-//                    console.log(d)
-////                    alert(d);
-//                },
-//                error:function () {
-//                    alert("Something Wrong!!");
-//                }
-//
-//            })
-//        })
-//        $(document).ready(function () {
-//            $.ajax({
-//                type:"GET",
-//                url:"oooothertest",
-//                dataType:"json",
-//                success:function (data) {
-//                    var d = eval("("+data+")");
-//                    console.log(d)
-////                    alert(d);
-//                },
-//                error:function () {
-//                    alert("Something Wrong!!");
-//                }
-//
-//            })
-//        })
-        function a(res) {
-            var req_res = "${requestScope.results}";
-            var req_res = "<%=request.getAttribute("results")%>";
+        $(document).ready(function () {
+            $.ajax({
+                type:"GET",
+                url:"IndexGetBlogAction?searchDetails=*",
+                dataType:"json",
+                success:function (data) {
+                    var d = eval("("+data+")");
+                    a(d);
 
-            alert(type(req_res))
+
+                },
+                error:function () {
+                    alert("Something Wrong With The Connection!!");
+                }
+
+            })
+        })
+
+        function a(data) {
+//            var html = '<ul>';
+//            for (var i = 0; i < data.length; i++) {
+//                html += '<li><ul>';
+//                for (var j=0; j<data[i].length; j++){
+//                    html += '<li>' + data[i][j] + '</li>';
+//                }
+//                html += '</ul></li>';
+//            }
+//            html += '</ul>';
+            for (var i=0;i<data.length;i++){
+                $('#mainPanels').append(getNewPanel(data[i],i));
+            }
+
+        }
+
+        function getNewPanel(date,num) {
+            <%--var href_val = "<c:url value='/blog/ShowBlogDetails'>+--%>
+                                <%--<c:param name='operateBlogID' value='""'/>+--%>
+                            <%--</c:url>";--%>
+            var href_val = "/blog/ShowBlogDetails?operateBlogID="+date[0];
+            var div_1 = "<div class='panel panel-default'>" +
+                "<div class='panel-heading'>" +
+                "<h4 class='panel-title'>"+
+                "<a data-toggle='collapse' data-parent='#mainPanels' href='#collapse"+num+"'>"+
+                "Blog: "+date[1]+"</a></h4></div>";
+            var div_2 = "<div id='collapse"+num+"' class='panel-collapse collapse'>" +
+                "<div class='panel-body'>" +
+                "<a href='"+href_val+"'>"+
+                date[2]+"</a></div>"+
+                "<div class='panel-footer'>" +
+                "<span style='margin-left:50px'><i class='glyphicon glyphicon-screenshot'></i>ClickTimes:"+date[3]+"</span>" +
+                "<span style='margin-left:50px'><i class='glyphicon glyphicon-time'></i>PublishTime:"+date[4]+"</span>" +
+                "<span style='margin-left:50px'><i class='glyphicon glyphicon-user'></i>Author:"+date[5]+"</span>" +
+                "</div></div></div>"
+            return div_1+div_2;
         }
 
         $(document).ready(function () {
@@ -121,6 +122,7 @@
 
         .carousel .item img {
             width: 100%;
+            height: 100%;
         }
 
         .carousel-caption {
@@ -227,7 +229,7 @@
 
                 <div class="carousel-inner">
                     <div class="item active">
-                        <img src="images/Browser/chrome-big.jpg" alt="1 slide">
+                        <img src="/imgs/20180401145847511.gif" alt="1 slide">
 
                         <div class="container">
                             <div class="carousel-caption">
@@ -241,7 +243,7 @@
                         </div>
                     </div>
                     <div class="item">
-                        <img src="images/Browser/firefox-big.jpg" alt="2 slide">
+                        <img src="/imgs/20180401145847511.gif" alt="2 slide">
 
                         <div class="container">
                             <div class="carousel-caption">
@@ -255,7 +257,7 @@
                         </div>
                     </div>
                     <div class="item">
-                        <img src="images/Browser/safari-big.jpg" alt="3 slide">
+                        <img src="/imgs/20180401145847511.gif" alt="3 slide">
 
                         <div class="container">
                             <div class="carousel-caption">
@@ -269,7 +271,7 @@
                         </div>
                     </div>
                     <div class="item">
-                        <img src="images/Browser/opera-big.jpg" alt="4 slide">
+                        <img src="/imgs/20180401145847511.gif" alt="4 slide">
 
                         <div class="container">
                             <div class="carousel-caption">
@@ -283,7 +285,7 @@
                         </div>
                     </div>
                     <div class="item">
-                        <img src="images/Browser/ie-big.jpg" alt="5 slide">
+                        <img src="/imgs/20180401145847511.gif" alt="5 slide">
 
                         <div class="container">
                             <div class="carousel-caption">
@@ -302,39 +304,32 @@
                 <a class="right carousel-control" href="#ad-carousel" data-slide="next"><span
                         class="glyphicon glyphicon-chevron-right"></span></a>
             </div>
+            <hr>
+            <form class="form-inline" role="form" action="blog/SearchBlogAction" method="post" style="padding-top: 30px;padding-left: 250px">
+                <div class="form-group">
+                    <span class="input-group"><i class="glyphicon glyphicon-search"></i></span>
+                    <label class="sr-only" for="keyword">KeyWord</label>
+                    <input type=text class="form-control" id="keyword" placeholder="Key Words" name="searchDetail">
+                </div>
+                <div class="form-group">
+                    <span class="input-group"><i class="glyphicon glyphicon-pencil"></i></span>
+                    <input class="form-control" type="radio" name="searchMode" value="BlogName" checked/>title
+                    <input class="form-control" type="radio" name="searchMode" value="OwnerName"/>owner
+                </div>
+                <div class="input-group input-group-md">
+                    <button type="submit" class="btn btn-default" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>Search
+                    </button>
+                </div>
+            </form>
+        </div>
+        <hr style="padding: 20px;">
+        <div class="row">
+            <div class="panel-group" id="mainPanels">
+
+            </div>
         </div>
     </div>
-    <%--<c:set var="results" value="results" scope="request"/>--%>
-    <h2>Hello World!</h2>
-    <h5><c:out value="${results}" default="default result by no scope"/></h5>
-    <h5><c:out value="${requestScope.results}" default="request result disappeared"/></h5>
-    <%--${requestScope.get("results")}--%>
-    <c:out value="${sessionScope.results}" default="session result disappeared"/><br/>
-    <c:out value="${sessionScope.current_user}" default="no current user"/><br/>
-    <c:out value="${userBean}" default="no user bean"/><br/>
-    <a href="user/LogoutAction?test=<c:out value='${current_user}'/>">logout</a>
-    <a href="LogoutAction?test=${requestScope.results}">logout</a>
-    <a href="<c:url value='/user/LogoutAction'><c:param name="test" value="test"/></c:url>">logout</a>
-    <button type="button" onclick="a('${requestScope.results}')">click</button>
-
-
-    <table>
-        <c:forEach var="userBean" items="${userBeanList}">
-            <tr>
-                <td><c:out value="${userBean.userID}"/></td>
-                <td><c:out value="${userBean.userName}"/></td>
-                <td><c:out value="${userBean.userPwd}"/></td>
-                <td>
-                    <a href="<c:url value='/user/LogoutAction'>
-                        <c:param name="test" value="${userBean.userID}"/></c:url>">logout
-                    </a>
-                </td>
-                <td>
-                    <a href="user/LogoutAction?test=<c:out value='${userBean.userID}'/>">logout</a>
-                </td>
-            </tr>
-        </c:forEach>
-    </table>
 
     <hr>
 </body>

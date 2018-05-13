@@ -17,8 +17,6 @@
         </action>
     </package>
 
-
-
     <package name="indexLoad" namespace="/" extends="struts-default">
         <result-types>
             <result-type name="json" class="org.apache.struts2.json.JSONResult"/>
@@ -26,10 +24,11 @@
         <interceptors>
             <interceptor name="json" class="org.apache.struts2.json.JSONInterceptor"/>
         </interceptors>
-        <!--<action name="test" class="com.yangmj.test.Test_2" method="execute">-->
-            <!--<result name="SUCCESS">/index.jsp</result>-->
-            <!--&lt;!&ndash;<result name="error">/error.jsp</result>&ndash;&gt;-->
-        <!--</action>-->
+        <action name="IndexGetBlogAction" class="BlogStuffsAction" method="indexBlogList">
+            <result name="success" type="json">
+                <param name="root">indexBlogBeanListJson</param>
+            </result>
+        </action>
         <!--<action name="anothertest" class="com.yangmj.test.Test_2" method="getAction">-->
             <!--<result name="success">/index.jsp</result>-->
             <!--&lt;!&ndash;<result name="error">/error.jsp</result>&ndash;&gt;-->
@@ -117,8 +116,8 @@
             <result name="error">/error.jsp</result>
         </action>
         <action name="SearchBlogAction" class="BlogStuffsAction" method="searchBlog">
-            <result name="success">/.jsp</result>
-            <result name="error">/error.jsp</result>
+            <result name="success">/searchblogresult.jsp</result>
+            <result name="error">/index.jsp</result>
         </action>
     </package>
 

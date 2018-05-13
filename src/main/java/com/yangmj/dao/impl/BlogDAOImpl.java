@@ -51,8 +51,14 @@ public class BlogDAOImpl implements BlogDAO {
     public List<BlogBean> getBlogListByBlogName(String searchDetails) {
         Session session = sessionFactory.openSession();
         List<BlogBean> blogBeanList = new ArrayList<>();
-        String hql = "from BlogBean b where b.blogTitle='" + searchDetails + "'";
-        blogBeanList = session.createQuery(hql).list();
+        if(searchDetails.equals("*")){
+            String hql = "select b.blogID,b.blogTitle,b.blogContent,b.blogClickTimes,b.blogDate,b.userBean.userName from BlogBean b order by b.blogClickTimes desc";
+            blogBeanList = session.createQuery(hql).list();
+        }
+        else {
+            String hql = "from BlogBean b where b.blogTitle like '%" + searchDetails + "%'";
+            blogBeanList = session.createQuery(hql).list();
+        }
         session.close();
         return blogBeanList;
     }
@@ -61,7 +67,7 @@ public class BlogDAOImpl implements BlogDAO {
     public List<BlogBean> getBlogListByUserName(String searchDetails) {
         Session session = sessionFactory.openSession();
         List<BlogBean> blogBeanList = new ArrayList<>();
-        String hql = "from BlogBean b where b.userBean.userName='" + searchDetails + "'";
+        String hql = "from BlogBean b where b.userBean.userName like '%" + searchDetails + "%'";
         blogBeanList = session.createQuery(hql).list();
         session.close();
         return blogBeanList;
@@ -103,6 +109,7 @@ public class BlogDAOImpl implements BlogDAO {
         session.close();
         return blogBean;
     }
+
 
 
 }
