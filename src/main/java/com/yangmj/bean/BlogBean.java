@@ -13,6 +13,14 @@ public class BlogBean {
     public BlogBean() {
     }
 
+    public BlogBean(String blogTitle, String blogDate, int blogClickTimes, String blogContent, UserBean userBean) {
+        this.blogTitle = blogTitle;
+        this.blogDate = blogDate;
+        this.blogClickTimes = blogClickTimes;
+        this.blogContent = blogContent;
+        this.userBean = userBean;
+    }
+
     public BlogBean(String blogTitle, String blogDate, int blogClickTimes, String blogContent, int blogID, UserBean userBean) {
         this.blogTitle = blogTitle;
         this.blogDate = blogDate;

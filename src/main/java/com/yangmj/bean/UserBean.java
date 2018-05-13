@@ -14,9 +14,8 @@ public class UserBean {
     public UserBean() {
     }
 
-    public UserBean(String userName, String userPwd) {
+    public UserBean(String userName) {
         this.userName = userName;
-        this.userPwd = userPwd;
     }
 
     public UserBean(String userName, String userPwd, LevelBean levelBean) {

@@ -64,6 +64,7 @@
         function a(res) {
             var req_res = "${requestScope.results}";
             var req_res = "<%=request.getAttribute("results")%>";
+
             alert(type(req_res))
         }
 
@@ -71,15 +72,12 @@
             var str = "current_user";
             var current_user = "<%=session.getAttribute("current_user")%>";
             if (current_user != "null") {
-                $("a").remove("#unlogined");
                 $("#logined").css({"color": "green","display":"inherit"});
-                $("#logined").parent().parent().
-                append("<li><a href='/login.jsp' style='color: #ff0000' data-toggle='tooltip'" +
+                $("#commonOperate").after("<li><a href='/login.jsp' style='color: #ff0000' data-toggle='tooltip'" +
                     "data-placement='bottom' title='Click To Open Login Page'>Change Account</a></li>").
-                append("<li><a href='GetUserInfoByName'>Modify Personal Info</a></li>")
+                after("<li><a href='GetUserInfoByName'>Modify Personal Info</a></li>")
             }
             else {
-                $("a").remove("#logined");
                 $("#unlogined").css({"color": "red","display":"inherit"});
             }
         })
@@ -150,22 +148,31 @@
         </div>
         <div class="collapse navbar-collapse navbar-responsive-collapse" id="navbar-responsive-collapse">
             <ul class="nav navbar-nav">
-                <li>
-                    <a id="logined" href="#" data-toggle="modal" data-target="#info_modal" style="display: none">
+                <li class="dropdown" id="logined" href="#" style="display: none" >
+                    <a class="dropdown-toggle" data-toggle="dropdown">
                         <i class="glyphicon glyphicon-user"></i>
                         Current User:
                         <c:out value="${sessionScope.current_user}"/>
+                        <b class="caret"></b>
                     </a>
+                    <ul id="userDropDown" class="dropdown-menu dropdown-menu-left" role="menu" aria-labelledby="dropdownMenu2">
+                        <li role="presentation" class="dropdown-header">Personal Pages</li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="/createblog.jsp">Push new blog</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="<c:url value="/blog/ShowCurrentUserBlog"/>">Your profile</a></li>
+                        <li role="presentation" class="divider"></li>
+                        <li id="commonOperate" role="presentation" class="dropdown-header">Common Operate</li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" id="showall" href="javascript:void(0);" onclick="showAllUsers()">I'm Manager</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="<c:url value='/user/LogoutAction'></c:url>" style="color: #0300f0;">Log Out</a></li>
+                    </ul>
                 </li>
-                <li>
-                    <a id="unlogined" href="/login.jsp" style="display: none">Please Login First.</a>
+                <li id="unlogined"  style="display: none">
+                    <a href="/login.jsp">Please Login First.</a>
                 </li>
                 <li><a href="/index.jsp">index</a></li>
                 <li><a href="/login.jsp">sign in</a></li>
                 <li><a href="/register.jsp">sign up</a></li>
                 <li><a href="/searchpage.jsp">search</a></li>
                 <li><a href="#" data-toggle="modal" data-target="#mymodal">contact</a></li>
-                <li><a id="showall" href="javascript:void(0);" onclick="showAllUsers()">I'm Manager</a></li>
             </ul>
             <form action="search/SearchVirusAction" class="navbar-form navbar-right" role="search">
                 <div class="input-group input-group-md">
@@ -305,9 +312,30 @@
     <c:out value="${sessionScope.results}" default="session result disappeared"/><br/>
     <c:out value="${sessionScope.current_user}" default="no current user"/><br/>
     <c:out value="${userBean}" default="no user bean"/><br/>
-    <a href="user/LogoutAction" hidden>logout</a>
-    <a href="LogoutAction">logout</a>
+    <a href="user/LogoutAction?test=<c:out value='${current_user}'/>">logout</a>
+    <a href="LogoutAction?test=${requestScope.results}">logout</a>
+    <a href="<c:url value='/user/LogoutAction'><c:param name="test" value="test"/></c:url>">logout</a>
     <button type="button" onclick="a('${requestScope.results}')">click</button>
+
+
+    <table>
+        <c:forEach var="userBean" items="${userBeanList}">
+            <tr>
+                <td><c:out value="${userBean.userID}"/></td>
+                <td><c:out value="${userBean.userName}"/></td>
+                <td><c:out value="${userBean.userPwd}"/></td>
+                <td>
+                    <a href="<c:url value='/user/LogoutAction'>
+                        <c:param name="test" value="${userBean.userID}"/></c:url>">logout
+                    </a>
+                </td>
+                <td>
+                    <a href="user/LogoutAction?test=<c:out value='${userBean.userID}'/>">logout</a>
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
+
     <hr>
 </body>
 </html>

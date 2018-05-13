@@ -86,9 +86,39 @@
     </package>
 
     <package name="blogAction" namespace="/blog" extends="struts-default">
-        <action name="SearchBlogAction" class="BlogStuffsAction" method="">
-            <result name="success">/</result>
-            <result name="error">/</result>
+        <action name="SearchBlog" class="BlogStuffsAction" method="searchBlog">
+            <result name="success">/searchblogresult.jsp</result>
+            <result name="error">/error.jsp</result>
+        </action>
+        <action name="AddNewBlog" class="BlogStuffsAction" method="saveBlog">
+            <result name="success" type="redirectAction">
+                <param name="actionName">ShowCurrentUserBlog</param>
+            </result>
+            <result name="error">/error.jsp</result>
+        </action>
+        <action name="ShowCurrentUserBlog" class="BlogStuffsAction" method="getCurrentUserBlog">
+            <result name="success">/userbloglist.jsp</result>
+            <result name="error">/login.jsp</result>
+        </action>
+        <action name="UpdateBlogContent" class="BlogStuffsAction" method="updateBlog">
+            <result name="success">/userbloglist.jsp</result>
+            <result name="error">/error.jsp</result>
+        </action>
+        <action name="ShowBlogDetails" class="BlogStuffsAction" method="getBlogDetailsByBlogID">
+            <result name="success">/bloginfo.jsp</result>
+            <result name="error">/error.jsp</result>
+        </action>
+        <action name="ChangeBlogDetails" class="BlogStuffsAction" method="getBlogDetailsByBlogID">
+            <result name="success">/modifyblog.jsp</result>
+            <result name="error">/error.jsp</result>
+        </action>
+        <action name="DeleteBlog" class="BlogStuffsAction" method="deleteBlog">
+            <result name="success">/userbloglist.jsp</result>
+            <result name="error">/error.jsp</result>
+        </action>
+        <action name="SearchBlogAction" class="BlogStuffsAction" method="searchBlog">
+            <result name="success">/.jsp</result>
+            <result name="error">/error.jsp</result>
         </action>
     </package>
 
@@ -102,6 +132,12 @@
     <package name="test" namespace="/test" extends="struts-default">
         <action name="TestAction" class="com.yangmj.action.SearchVirusAction" method="TestAction">
             <result name="success">/searchresult.jsp</result>
+        </action>
+        <action name="TestBlogAction" class="BlogStuffsAction" method="saveBlog">
+            <result name="success">/index.jsp</result>
+        </action>
+        <action name="GetBlogList" class="BlogStuffsAction" method="testGetBlogList">
+            <result name="success">/searchblogresult.jsp</result>
         </action>
     </package>
 </struts>

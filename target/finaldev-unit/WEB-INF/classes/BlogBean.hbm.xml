@@ -17,7 +17,7 @@
         <property name="blogClickTimes" column="views_count"/><!-- name一般都是类中的属性名 -->
         <property name="blogContent" column="content"/><!-- name一般都是类中的属性名 -->
 
-        <many-to-one name="userBean" column="USER_ID" class="com.yangmj.bean.UserBean" cascade="save-update,delete"  unique="true"/>
+        <many-to-one name="userBean" column="USER_ID" class="com.yangmj.bean.UserBean" lazy="false" unique="true"/>
 
     </class>
 

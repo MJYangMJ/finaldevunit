@@ -54,6 +54,15 @@ public class UserStuffsAction extends ActionSupport {
         this.error_message = error_message;
     }
 
+    private String test;
+
+    public String getTest() {
+        return test;
+    }
+
+    public void setTest(String test) {
+        this.test = test;
+    }
     //    private UserBean userBean;
 
 //    @Override
@@ -66,6 +75,7 @@ public class UserStuffsAction extends ActionSupport {
     public String login() {
         boolean checkResult = checkIfLoginSuccess(userBean.getUserName(),userBean.getUserPwd());
         if (checkResult) {
+            ActionContext.getContext().getSession().remove("current_user");
             ActionContext.getContext().getSession().put("current_user", userBean.getUserName());
             return "success";
         } else {
@@ -75,7 +85,11 @@ public class UserStuffsAction extends ActionSupport {
     }
 
     public String logout(){
-        System.out.println("you are now off line!");
+//        System.out.println("you are now off line!");
+//        ActionContext actionContext = ActionContext.getContext();
+//        Map<String,Object> request = (Map) actionContext.get("request");
+//        System.out.println(request.get("test"));
+//        System.out.println(test);
         ActionContext.getContext().getSession().remove("current_user");
         return "success";
     }
@@ -152,7 +166,7 @@ public class UserStuffsAction extends ActionSupport {
 //        userService.saveUser(name,pwd);
 //        userService.updateUserInfo(name,pwd,old_name);
 //        List<UserBean> userBeanList = new ArrayList<>();
-//        userBeanList = userService.getAllUsers();
+        userBeanList = userService.getAllUsers();
 //        System.out.println(userBeanList);
 //        boolean checkResult = userService.checkUserInputValue(name,pwd);
 //        System.out.println(checkResult);
@@ -160,14 +174,14 @@ public class UserStuffsAction extends ActionSupport {
 //        System.out.println(isUserExist);
 //        boolean saved = userService.saveUser(name,pwd);
 //        System.out.println("save status:"+saved);
-        ActionContext actionContext = ActionContext.getContext();
-        Map<String,Object> request = (Map) actionContext.get("request");
-        Map<String,Object> session = (Map) actionContext.get("session");
-
-        System.out.println(request.get("request"));
-        System.out.println(session.get("session"));
-        request.put("results","results in request");
-        System.out.println(request.get("results"));
+//        ActionContext actionContext = ActionContext.getContext();
+//        Map<String,Object> request = (Map) actionContext.get("request");
+//        Map<String,Object> session = (Map) actionContext.get("session");
+//
+//        System.out.println(request.get("request"));
+//        System.out.println(session.get("session"));
+//        request.put("results","results in request");
+//        System.out.println(request.get("results"));
 //        System.out.println(ActionContext.getContext());
         return "success";
     }
