@@ -25,7 +25,7 @@
 </head>
 <body>
     <div class="container">
-        <div class="row">
+        <div class="row" style="padding-top: 50px">
             <div class="well col-md-6 col-md-offset-3">
                 <form class="form-horizontal" action="<c:url value="/blog/UpdateBlogContent"/>" method="post">
                     <div class="form-group  has-success has-feedback">
